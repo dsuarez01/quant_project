@@ -4,10 +4,10 @@ React-based user interface for the model quantization demo tool.
 
 ## Tech Stack
 
-- **React** - UI framework
-- **Vite** - Build tool and dev server
-- **CSS** - Styling (BEM methodology)
-- **Recharts** - Data visualization
+- **⚛️ React** - UI framework
+- **⚡ Vite** - Build tool and dev server
+- **🎨 CSS** - Styling (BEM methodology)
+- **📊 Recharts** - Data visualization
 
 ## Project Structure
 
