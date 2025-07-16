@@ -22,4 +22,3 @@ To open on localhost, run the following commands from this directory:
 ```bash
 npm install
 npm run dev
-```
