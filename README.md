@@ -4,9 +4,9 @@ A proof-of-concept application for demonstrating quantization on large language 
 
 ## Features
 
-- 🎯 **Quantization Recommendations** - Suggests optimal quantization procedures
-- 🔍 **Layer Sensitivity Analysis** - Identifies which layers are most sensitive to quantization
-- ⚡ **Performance Benchmarking** - Measures inference speed improvements
+**🎯 Quantization Recommendations** - Suggests optimal quantization procedures
+**🔍 Layer Sensitivity Analysis** - Identifies which layers are most sensitive to quantization
+**⚡ Performance Benchmarking** - Measures inference speed improvements
 
 ## Getting Started
 
