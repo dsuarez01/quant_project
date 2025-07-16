@@ -1,6 +1,6 @@
 # Frontend - Model Quantization Demo
 
-React-based user interface for the model quantization demonstration tool.
+React-based user interface for the model quantization demo tool.
 
 ## Tech Stack
 
