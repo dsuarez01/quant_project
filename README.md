@@ -16,7 +16,7 @@ A proof-of-concept application for demonstrating quantization on large language 
 
 ## Getting Started
 
-(TBD) For now, fork the repository and open on localhost: from `./quant_project/frontend`, run these commands:
+(TBD) For now, fork or clone the repository and open on localhost: from `./quant_project/frontend`, run these commands:
 
 ```bash
 npm install
