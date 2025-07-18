@@ -4,10 +4,10 @@ import './Dashboard.css';
 export default function Dashboard({ model, sensitivityData, performanceData }) {
   const avgSensitivity = sensitivityData.reduce((sum, layer) => sum + layer.sensitivity, 0) / sensitivityData.length;
   const highSensitivityLayers = sensitivityData.filter(layer => layer.sensitivity > 0.4).length;
-  const speedup = performanceData.int8.throughput / performanceData.fp32.throughput;
+  const speedup = performanceData.int4.throughput / performanceData.fp16.throughput;
 
   const recommendation = avgSensitivity < 0.3 
-    ? { level: 'excellent', text: 'Excellent candidate for INT8 quantization with minimal accuracy loss' }
+    ? { level: 'excellent', text: 'Excellent candidate for INT4 quantization with minimal accuracy loss' }
     : avgSensitivity < 0.45
     ? { level: 'good', text: 'Good candidate for quantization, consider mixed precision for sensitive layers' }
     : { level: 'caution', text: 'Use quantization with caution, implement layer-wise mixed precision' };

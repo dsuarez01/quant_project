@@ -14,8 +14,8 @@ type LayerData struct {
 
 // stores benchmark results
 type PerformanceData struct {
-	FP32 BenchmarkMetrics `json:"fp32"`
-	INT8 BenchmarkMetrics `json:"int8"`
+	FP16 BenchmarkMetrics `json:"fp16"`
+	INT4 BenchmarkMetrics `json:"int4"`
 }
 
 type BenchmarkMetrics struct {

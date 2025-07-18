@@ -26,13 +26,13 @@ func RunBenchmark(modelID string, modelType string) (types.PerformanceData, erro
 	// generate fake data for now
 	if modelType == "language" {
 		perfData = types.PerformanceData{
-			FP32: types.BenchmarkMetrics{Throughput: 145.2, Latency: 6.9},
-			INT8: types.BenchmarkMetrics{Throughput: 412.7, Latency: 2.4},
+			FP16: types.BenchmarkMetrics{Throughput: 145.2, Latency: 6.9},
+			INT4: types.BenchmarkMetrics{Throughput: 412.7, Latency: 2.4},
 		}
 	} else {
 		perfData = types.PerformanceData{
-			FP32: types.BenchmarkMetrics{Throughput: 89.3, Latency: 11.2},
-			INT8: types.BenchmarkMetrics{Throughput: 267.8, Latency: 3.7},
+			FP16: types.BenchmarkMetrics{Throughput: 89.3, Latency: 11.2},
+			INT4: types.BenchmarkMetrics{Throughput: 267.8, Latency: 3.7},
 		}
 	}
 

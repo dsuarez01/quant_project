@@ -3,30 +3,30 @@ import './PerformanceBench.css';
 
 export default function PerformanceBench({ data, modelType }) {
   const throughputUnit = modelType === 'language' ? 'tokens/sec' : 'images/sec';
-  const speedup = data.int8.throughput / data.fp32.throughput;
+  const speedup = data.int4.throughput / data.fp16.throughput;
 
   return (
     <div className="performance-bench">
       <h3 className="performance-bench__title">Performance Benchmarks</h3>
       <p className="performance-bench__description">
-        Comparing FP32 vs INT8 inference performance
+        Comparing FP16 vs INT4 inference performance
       </p>
 
       <div className="performance-bench__cards">
         <BenchmarkCard
-          title="FP32 (Baseline)"
-          modifier="fp32"
+          title="FP16 (Baseline)"
+          modifier="fp16"
           metrics={[
-            { label: 'Throughput', value: data.fp32.throughput.toFixed(1), unit: throughputUnit },
-            { label: 'Latency', value: data.fp32.latency.toFixed(1), unit: 'ms' }
+            { label: 'Throughput', value: data.fp16.throughput.toFixed(1), unit: throughputUnit },
+            { label: 'Latency', value: data.fp16.latency.toFixed(1), unit: 'ms' }
           ]}
         />
         <BenchmarkCard
-          title="INT8 (Quantized)"
-          modifier="int8"
+          title="INT4 (Quantized)"
+          modifier="int4"
           metrics={[
-            { label: 'Throughput', value: data.int8.throughput.toFixed(1), unit: throughputUnit },
-            { label: 'Latency', value: data.int8.latency.toFixed(1), unit: 'ms' }
+            { label: 'Throughput', value: data.int4.throughput.toFixed(1), unit: throughputUnit },
+            { label: 'Latency', value: data.int4.latency.toFixed(1), unit: 'ms' }
           ]}
         />
       </div>
