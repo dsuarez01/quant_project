@@ -6,6 +6,8 @@ import PerformanceBench from './components/PerformanceBench/PerformanceBench.jsx
 import Spinner from './components/Spinner/Spinner.jsx';
 import './App.css';
 
+const API_BASE_URL = 'http://localhost:8080';
+
 export default function App() {
   const [selectedModel, setSelectedModel] = useState(null);
   const [sensitivityData, setSensitivityData] = useState(null);
@@ -19,28 +21,28 @@ export default function App() {
   };
 
   const handleAnalyze = async () => {
-    console.log("Starting analysis...");
+    console.log("Starting analysis...", selectedModel);
     setIsAnalyzing(true);
-    setTimeout(() => {
-      const layers = Array.from({ length: 12 }, (_, i) => ({
-        name: `Layer ${i + 1}`,
-        sensitivity: Math.random() * 0.5 + 0.2,
-        type: i % 3 === 0 ? 'attention' : i % 3 === 1 ? 'mlp' : 'norm'
-      }));
-      setSensitivityData(layers);
-      
-      setPerformanceData({
-        fp32: {
-          throughput: selectedModel?.type === 'language' ? 145.2 : 89.3,
-          latency: selectedModel?.type === 'language' ? 6.9 : 11.2
-        },
-        int8: {
-          throughput: selectedModel?.type === 'language' ? 412.7 : 267.8,
-          latency: selectedModel?.type === 'language' ? 2.4 : 3.7
-        }
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/analyze`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ modelId: selectedModel.id }),
       });
+
+      if (!response.ok) {
+        throw new Error('Analysis failed');
+      }
+
+      const data = await response.json();
+      console.log("Received data:", data);
+      setSensitivityData(data.layerSensitivity);
+      setPerformanceData(data.performanceBench);
+    } catch (error) {
+      console.error('Error running analysis:', error);
+    } finally {
       setIsAnalyzing(false);
-    }, 2000);
+    }
   };
 
   return (

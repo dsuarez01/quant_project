@@ -1,0 +1,9 @@
+{
+    "devDependencies": {
+        "concurrently": "*"
+    },
+    "scripts": {
+        "dev": "concurrently \"cd backend && go run main.go\" \"cd frontend && npm run dev\"",
+        "setup": "npm install && cd frontend && npm install"
+    }
+}
