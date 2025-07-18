@@ -1,7 +1,8 @@
 package types
 
 type AnalysisRequest struct {
-	ModelID string `json:"modelId"`
+	ModelID   string `json:"modelId"`
+	ModelType string `json:"modelType"`
 }
 
 // sensitivity data for a single layer

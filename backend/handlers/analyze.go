@@ -1,10 +1,9 @@
 package handlers
 
 import (
+	"backend/quantization"
 	"backend/types"
 	"encoding/json"
-	"fmt"
-	"math/rand"
 	"net/http"
 )
 
@@ -20,37 +19,17 @@ func HandleAnalyze(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// generate fake data for now
-	layers := make([]types.LayerData, 12)
-	for i := 0; i < 12; i++ {
-		layerType := "attention"
-		if i%3 == 1 {
-			layerType = "mlp"
-		} else if i%3 == 2 {
-			layerType = "norm"
-		}
-		layers[i] = types.LayerData{
-			Name:        fmt.Sprintf("Layer %d", i+1),
-			Sensitivity: rand.Float64()*0.5 + 0.2, // range btwn. 0.2 and 0.7 for now
-			Type:        layerType,
-		}
+	layers, err_layers := quantization.AnalyzeLayers(req.ModelID, req.ModelType)
+	perfData, err_perfData := quantization.RunBenchmark(req.ModelID, req.ModelType)
+
+	if err_layers != nil {
+		http.Error(w, "Error in layer analysis code", http.StatusInternalServerError)
+		return
 	}
 
-	isLanguageModel := req.ModelID == "llama2-7b" || req.ModelID == "llama2-13b"
-
-	var perfData types.PerformanceData
-
-	// TO-DO: call different routines for fetching performance data
-	if isLanguageModel {
-		perfData = types.PerformanceData{
-			FP32: types.BenchmarkMetrics{Throughput: 145.2, Latency: 6.9},
-			INT8: types.BenchmarkMetrics{Throughput: 412.7, Latency: 2.4},
-		}
-	} else {
-		perfData = types.PerformanceData{
-			FP32: types.BenchmarkMetrics{Throughput: 89.3, Latency: 11.2},
-			INT8: types.BenchmarkMetrics{Throughput: 267.8, Latency: 3.7},
-		}
+	if err_perfData != nil {
+		http.Error(w, "Error in benchmarking code", http.StatusInternalServerError)
+		return
 	}
 
 	response := types.AnalysisResponse{

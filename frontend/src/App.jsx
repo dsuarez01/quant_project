@@ -4,9 +4,8 @@ import Dashboard from './components/Dashboard/Dashboard.jsx';
 import LayerSensitivity from './components/LayerSensitivity/LayerSensitivity.jsx';
 import PerformanceBench from './components/PerformanceBench/PerformanceBench.jsx';
 import Spinner from './components/Spinner/Spinner.jsx';
+import { analyzeModel } from './services/api.js';
 import './App.css';
-
-const API_BASE_URL = 'http://localhost:8080';
 
 export default function App() {
   const [selectedModel, setSelectedModel] = useState(null);
@@ -24,17 +23,7 @@ export default function App() {
     console.log("Starting analysis...", selectedModel);
     setIsAnalyzing(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/analyze`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ modelId: selectedModel.id }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Analysis failed');
-      }
-
-      const data = await response.json();
+      const data = await analyzeModel(selectedModel.id, selectedModel.type);
       console.log("Received data:", data);
       setSensitivityData(data.layerSensitivity);
       setPerformanceData(data.performanceBench);
